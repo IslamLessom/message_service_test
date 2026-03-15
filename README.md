@@ -29,6 +29,9 @@
 
 # Запустите приложение
  ./mvnw spring-boot:run
+
+# Тесты
+./mvnw test 
 ```
 
 ---
