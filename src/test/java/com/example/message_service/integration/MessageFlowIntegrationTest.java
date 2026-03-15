@@ -11,15 +11,18 @@ import com.example.message_service.conversation.Conversation;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class MessageFlowIntegrationTest {
     @Autowired
@@ -28,6 +31,8 @@ class MessageFlowIntegrationTest {
     private ConversationRepository conversationRepository;
     @Autowired
     private MessageRepository messageRepository;
+    @LocalServerPort
+    private int port;
     private RestTemplate restTemplate = new RestTemplate();
 
     @Test
@@ -46,7 +51,7 @@ class MessageFlowIntegrationTest {
 
         // Получение сообщения через REST API
         ResponseEntity<String> response = restTemplate.getForEntity(
-            "http://localhost:8080/messages/" + message.getId(), String.class);
+            "http://localhost:" + port + "/messages/" + message.getId(), String.class);
         assertEquals(200, response.getStatusCode().value());
         assertTrue(response.getBody().contains(content));
     }

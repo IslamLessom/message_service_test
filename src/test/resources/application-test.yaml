@@ -1,10 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/test_db
-    username: postgres
-    password: pass
+    url: jdbc:postgresql://localhost:5432/message_db
+    username: admin
+    password: secret
     driver-class-name: org.postgresql.Driver
-
-kafka:
-  bootstrap-servers: localhost:29092
+  kafka:
+    bootstrap-servers: localhost:29092
 
